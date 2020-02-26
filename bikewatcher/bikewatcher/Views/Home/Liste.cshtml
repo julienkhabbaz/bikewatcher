@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Liste des stations";
+    List<bikewatcher.Entity.BikeStation> stations = ViewBag.Stations;
+}
+<h1>@ViewData["Title"]</h1>
+
+
+<script type="text/javascript">
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+
+            if (window.location.search)
+                return;
+
+            window.location.replace("\Liste?lat=" + lat + "&lon=" + lon);
+        });
+    }
+</script>
+
+
+<a href="?ville=bordeaux">Liste pour bordeaux</a>
+<a href="?ville=lyon">Liste pour lyon</a>
+<ul>
+    @foreach (bikewatcher.Entity.BikeStation s in stations)
+    {
+        <li>
+            <div>@s.name</div>
+            <div>@s.address</div>
+            <a href="?favoris=@s.number">Favoris</a>
+        </li>
+    }
+</ul>
